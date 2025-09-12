@@ -19,7 +19,11 @@ jobs:
         with:
           python-version: '3.12'
 
-     
+      # Dependencies from requirements file
+      - name: Install dependencies
+        run: |
+          pip install -r BE/requirements.txt
+
       # Run unit tests
       - name: Run unit tests
         run: |
