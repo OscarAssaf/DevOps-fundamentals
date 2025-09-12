@@ -24,14 +24,17 @@ jobs:
         run: |
           pip install -r BE/requirements.txt
 
+
+      - name: Start API server
+        run: python BE/calculator.py --rest &
+
       # Run unit tests
       - name: Run unit tests
         run: |
           pytest test/test_api.py
           pytest test/test_unit.py
 
-      - name: Start API server
-        run: python BE/calculator.py --rest &
+    
 
       #Login to Azure Container Registry / ACR
       - name: Log in to Azure Container Registry
