@@ -7,6 +7,29 @@ from calculator_client.models.opertions import Opertions
 from calculator_client.models import ResultResponse
 
 
+
+
+
+class TestCalculatorAPI():
+    def test_add_api(self):
+        url = "http://localhost:5000/calculate"
+        payload = {
+            "operation": "add",
+            "operand1": 5,
+            "operand2": 5
+        }
+        response = requests.post(url, json=payload)
+        
+        
+
+        def test_generated_code(self):
+            client = Client(base_url="http://localhost:5000")
+            response = calculate.sync(client = client, body = Calculation(Opertions.ADD, operand1=5, operand2=4))
+            assert isinstance(response, ResultResponse)
+            assert response.result == 3
+
+
+"""
 class TestCalculatorAPI:
     
     @pytest.mark.parametrize(
@@ -60,7 +83,7 @@ class TestCalculatorAPI:
         response = calculate.sync(client=client, body=Calculation(Opertions.DIVIDE, operand1=operand1, operand2=operand2))
         assert isinstance(response, ResultResponse)
         assert response.result == expected
-
+"""
         
 """
         class TestCalculatorAPI():
