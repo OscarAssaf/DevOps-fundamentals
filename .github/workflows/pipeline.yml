@@ -31,12 +31,18 @@ jobs:
       # Run unit tests
       - name: Run unit tests
         run: |
-          pytest -v
+          pytest -v --junit-xml=report.xml
         env:
          PYTHONPATH: .
 
 
-    
+        # Shows the test report on GitHub
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v4
+        if: always()  
+        with:
+          report_paths: '**/report.xml'
+
 
       #Login to Azure Container Registry / ACR
       - name: Log in to Azure Container Registry
