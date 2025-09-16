@@ -7,24 +7,31 @@ on:
 
 jobs:
   build-and-push:
+    permissions: 
+      contents: read
+      checks: write
+
     runs-on: ubuntu-latest
+
+    env: 
+      PYTHONPATH: .
+
     steps:
       # Checkout the repo
       - name: Checkout repository
         uses: actions/checkout@v3
 
-       # Set up Python
+      # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.12'
-
       # Dependencies from requirements file
       - name: Install dependencies
         run: |
           pip install -r BE/requirements.txt
 
-
+      # Start API server
       - name: Start API server
         run: python BE/calculator.py --rest &
 
@@ -32,9 +39,6 @@ jobs:
       - name: Run unit tests
         run: |
           pytest -v --junit-xml=report.xml
-        env:
-         PYTHONPATH: .
-
 
         # Shows the test report on GitHub
       - name: Publish Test Report
@@ -42,7 +46,6 @@ jobs:
         if: always()  
         with:
           report_paths: '**/report.xml'
-
 
       #Login to Azure Container Registry / ACR
       - name: Log in to Azure Container Registry
