@@ -31,8 +31,10 @@ jobs:
       # Run unit tests
       - name: Run unit tests
         run: |
-          PYTHONPATH=. pytest test/test_api.py -v
-          PYTHONPATH=. pytest test/test_unit.py -v
+          pytest -v
+        env:
+         PYTHONPATH: .
+
 
     
 
