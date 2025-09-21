@@ -46,7 +46,7 @@ jobs:
       - name: Start Docker Compose
         run: |
           docker compose -p webcalculator up -d
-          
+
       # Run web tests
       - name: Run web tests
         run: |
@@ -54,7 +54,13 @@ jobs:
 
       # Start API server
       - name: Start API server
-        run: python BE/calculator.py --rest &
+        run: |
+          if lsof -i :5000; then
+            fuser -k 5000/tcp
+          fi
+
+          # Start the API server in the background
+          python BE/calculator.py --rest &
 
       # Run unit tests
       - name: Run unit tests
