@@ -13,7 +13,7 @@ class TestWeb(WebBase):
     def test_register_new_user(self):
         CalculatorPage(self.page).logout()
         register_page = RegisterPage(self.page)
-        register_page.register(username="hello12345", password="hi21")
+        register_page.register(username="hello12345", password="hi212")
         expect(CalculatorPage(self.page).element("username")).to_have_text("hello12345")
 
     
