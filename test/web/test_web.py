@@ -11,6 +11,7 @@ class TestWeb(WebBase):
         expect(CalculatorPage(self.page).element("username")).to_have_text("admin")
 
     def test_register_new_user(self):
+        CalculatorPage(self.page).logout()
         register_page = RegisterPage(self.page)
         register_page.register(username="hello12345", password="hi21")
         expect(CalculatorPage(self.page).element("username")).to_have_text("hello12345")
@@ -70,6 +71,8 @@ class TestWeb(WebBase):
 
 
     def test_history_feature(self):
+         
+        CalculatorPage(self.page).logout()
         #login
         login_page = LoginPage(self.page)
         login_page.login(username="admin", password="test1234")

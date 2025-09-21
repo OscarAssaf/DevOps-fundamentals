@@ -29,6 +29,7 @@ class CalculatorPage(PageBase):
 
             "toggle_button": "#toggle-button",
             "history": "#history",
+            "logout_button": "#logout-button",
         })
 
     def click_number(self, number):
@@ -48,6 +49,9 @@ class CalculatorPage(PageBase):
 
     def clear_screen(self):
         self.element("key_clear").click()
-
+    
     def open_history(self):
         self.element("toggle_button").click()
+
+    def logout(self):
+        self.element("logout_button").click()
