@@ -27,11 +27,6 @@ jobs:
         with:
           python-version: '3.12'
 
-      # Dependencies from requirements file
-      - name: Install dependencies
-        run: |
-          pip install -r BE/requirements.txt
-
       # Install Python packages needed for web testing
       - name: web testing dependencies
         run: |
@@ -57,6 +52,11 @@ jobs:
         run: |
          docker compose -p webcalculator stop backend 
           docker compose -p webcalculator rm -f backend  
+
+ # Dependencies from requirements file
+      - name: Install dependencies
+        run: |
+          pip install -r BE/requirements.txt
 
       # Start API server
       - name: Start API server
