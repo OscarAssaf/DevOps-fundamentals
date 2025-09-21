@@ -26,10 +26,31 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.12'
+
       # Dependencies from requirements file
       - name: Install dependencies
         run: |
           pip install -r BE/requirements.txt
+
+      # Install Python packages needed for web testing
+      - name: web testing dependencies
+        run: |
+          pip install playwright pytest
+
+      # Install playwright 
+      - name: Install Playwright
+        run: |
+          playwright install
+
+      # run docker compose
+      - name: Start Docker Compose
+        run: |
+          docker compose -p webcalculator up -d
+          
+      # Run web tests
+      - name: Run web tests
+        run: |
+          pytest -v --junit-xml=web-report.xml test/web/
 
       # Start API server
       - name: Start API server
