@@ -17,7 +17,7 @@ class TestCalculatorAPI:
         ]
     )
     def test_add_generated_code(self, operand1, operand2, expected):
-        client = Client(base_url="http://localhost:5050")
+        client = Client(base_url="http://localhost:5000")
         response = calculate.sync(client=client, body=Calculation(Opertions.ADD, operand1=operand1, operand2=operand2))
         assert isinstance(response, ResultResponse)
         assert response.result == expected
@@ -30,7 +30,7 @@ class TestCalculatorAPI:
         ]
     )
     def test_subtract_generated_code(self, operand1, operand2, expected):
-        client = Client(base_url="http://localhost:5050")
+        client = Client(base_url="http://localhost:5000")
         response = calculate.sync(client=client, body=Calculation(Opertions.SUBTRACT, operand1=operand1, operand2=operand2))
         assert isinstance(response, ResultResponse)
         assert response.result == expected
@@ -43,7 +43,7 @@ class TestCalculatorAPI:
         ]
     )
     def test_multiply_generated_code(self, operand1, operand2, expected):
-        client = Client(base_url="http://localhost:5050")
+        client = Client(base_url="http://localhost:5000")
         response = calculate.sync(client=client, body=Calculation(Opertions.MULTIPLY, operand1=operand1, operand2=operand2))
         assert isinstance(response, ResultResponse)
         assert response.result == expected
@@ -56,7 +56,7 @@ class TestCalculatorAPI:
         ]
     )
     def test_divide_generated_code(self, operand1, operand2, expected):
-        client = Client(base_url="http://localhost:5050")
+        client = Client(base_url="http://localhost:5000")
         response = calculate.sync(client=client, body=Calculation(Opertions.DIVIDE, operand1=operand1, operand2=operand2))
         assert isinstance(response, ResultResponse)
         assert response.result == expected
