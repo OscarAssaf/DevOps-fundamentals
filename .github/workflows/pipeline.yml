@@ -47,8 +47,7 @@ jobs:
       # Run unit tests
       - name: Run unit tests
         run: PYTHONPATH=$PYTHONPATH:test pytest --junit-xml=report.xml -k "not test_web"
-
-
+        
         # Shows the test report on GitHub
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v4
@@ -75,9 +74,33 @@ jobs:
       - name: Start Docker Compose
         run: |
           docker compose -p webcalculator up -d
-
+      
+      # Wait for services to be ready
+      - name: Wait for services to be ready
+        run: |
+          echo "Waiting for API to be ready..."
+          timeout 60 bash -c 'until curl -s http://localhost:5001/health > /dev/null 2>&1 || curl -s http://localhost:5001 > /dev/null 2>&1; do echo "Waiting for API..."; sleep 2; done'
+          echo "API is ready!"
+          
+          echo "Waiting for web interface to be ready..."
+          timeout 60 bash -c 'until curl -s http://localhost:8080 > /dev/null 2>&1; do echo "Waiting for web interface..."; sleep 2; done'
+          echo "Web interface is ready!"
+          
+      # Debug step to verify services
+      - name: Debug - Check running services
+        run: |
+          echo "=== Docker containers ==="
+          docker ps
+          echo "=== Port check ==="
+          curl -I http://localhost:5001 || echo "API (5001) not responding"
+          curl -I http://localhost:8080 || echo "Web (8080) not responding"
+          echo "=== Network check ==="
+          netstat -tuln | grep -E ':(5001|8080)'
+          
       # Run web tests
       - name: Run web tests
         run: |
           pytest -v --junit-xml=web-report.xml test/web/
- 
+        env:
+          # Make sure Playwright knows where to find the application
+          BASE_URL: http://localhost:8080
