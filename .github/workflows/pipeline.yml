@@ -47,12 +47,6 @@ jobs:
         run: |
           pytest -v --junit-xml=web-report.xml test/web/
 
-      #shut down docker
-      - name: Stop backend container
-        run: |
-         docker compose -p webcalculator stop backend 
-          docker compose -p webcalculator rm -f backend  
-
  # Dependencies from requirements file
       - name: Install dependencies
         run: |
