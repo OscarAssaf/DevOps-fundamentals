@@ -27,26 +27,6 @@ jobs:
         with:
           python-version: '3.12'
 
-      # Install Python packages needed for web testing
-      - name: web testing dependencies
-        run: |
-          pip install playwright pytest
-
-      # Install playwright 
-      - name: Install Playwright
-        run: |
-          playwright install
-
-      # run docker compose
-      - name: Start Docker Compose
-        run: |
-          docker compose -p webcalculator up -d
-
-      # Run web tests
-      - name: Run web tests
-        run: |
-          pytest -v --junit-xml=web-report.xml test/web/
-
  # Dependencies from requirements file
       - name: Install dependencies
         run: |
@@ -60,8 +40,8 @@ jobs:
 
       # Run unit tests
       - name: Run unit tests
-        run: |
-          pytest -v --junit-xml=report.xml
+        run: PYTHONPATH=$PYTHONPATH:test pytest --junit-xml=report.xml -k "not test_web"
+
 
         # Shows the test report on GitHub
       - name: Publish Test Report
@@ -84,3 +64,24 @@ jobs:
           IMAGE_NAME=judevops.azurecr.io/oscar_assaf_calculator
           docker build -t $IMAGE_NAME ./BE
           docker push $IMAGE_NAME
+
+ # Install Python packages needed for web testing
+      - name: web testing dependencies
+        run: |
+          pip install playwright pytest
+
+      # Install playwright 
+      - name: Install Playwright
+        run: |
+          playwright install
+
+      # run docker compose
+      - name: Start Docker Compose
+        run: |
+          docker compose -p webcalculator up -d
+
+      # Run web tests
+      - name: Run web tests
+        run: |
+          pytest -v --junit-xml=web-report.xml test/web/
+ 
