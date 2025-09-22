@@ -31,7 +31,13 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r BE/requirements.txt
+          pip install playwright pytest
 
+      # Install playwright 
+      - name: Install Playwright
+        run: |
+          playwright install
+          
       # Start API server
       - name: Start API server
         run: |
@@ -64,16 +70,6 @@ jobs:
           IMAGE_NAME=judevops.azurecr.io/oscar_assaf_calculator
           docker build -t $IMAGE_NAME ./BE
           docker push $IMAGE_NAME
-
- # Install Python packages needed for web testing
-      - name: web testing dependencies
-        run: |
-          pip install playwright pytest
-
-      # Install playwright 
-      - name: Install Playwright
-        run: |
-          playwright install
 
       # run docker compose
       - name: Start Docker Compose
