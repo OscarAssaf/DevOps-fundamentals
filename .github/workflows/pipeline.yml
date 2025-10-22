@@ -3,7 +3,7 @@ name: calculator CI/CD
 on:
   push:
     branches:
-      - testing-CI/CD-pipeline
+      - main
 
 jobs:
   build-and-push:
