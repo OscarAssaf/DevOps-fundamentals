@@ -53,7 +53,7 @@ class TestWeb(WebBase):
         calc_page.click_number(7)
         calc_page.element("key_equals").click()
         
-        # asser
+        # assert
         expect(calc_page.element("calculator_screen")).to_have_value("42")
 
     def test_calculator_divide(self):
